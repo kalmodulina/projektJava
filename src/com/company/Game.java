@@ -14,6 +14,8 @@ public class Game {
     private Company company = new Company();
     private LocalDate localDate = LocalDate.of(2020 , 1 , 1);
     private Locale polish = new Locale("pl", "PL");
+    private Integer daysForSearchingNewClients = 0;
+    private Integer daysToPayBills = 0;
 
     public Game() {
         this.addClientPool();
@@ -205,8 +207,16 @@ public class Game {
                 System.out.println("Przegrana ! Niestety stan konta Twojej firmy spadł poniżej 0 i przegrywasz.");
                 System.out.println("-------------------------\n");
             }
+            if (this.localDate.getDayOfMonth() == 1 && this.daysToPayBills < 2 && !this.localDate.isEqual(LocalDate.of(2020 , 1 , 1))) {
+                choice = 13;
+                System.out.println("Przegrana ! Nie rozliczyłeś się z urzędami i po kontroli zamykasz firmę z długami.");
+            }
             else {
                 printMenuOptions(localDate, polish);
+
+                if (this.localDate.getDayOfMonth() == 1) {
+                    this.daysToPayBills = 0;
+                }
 
                 Scanner scanner = new Scanner(System.in);
                 choice = scanner.nextInt();
@@ -228,10 +238,9 @@ public class Game {
                         break;
                     case 6:
                         searchNewClients();
-                        localDate = localDate.plusDays(1);
                         break;
                     case 7:
-                        localDate = localDate.plusDays(1);
+                        localDate = localDate.plusDays(20);
                         break;
                     case 8:
                         localDate = localDate.plusDays(1);
@@ -246,7 +255,7 @@ public class Game {
                         localDate = localDate.plusDays(1);
                         break;
                     case 12:
-                        localDate = localDate.plusDays(1);
+                        payBills();
                         break;
                     case 13:
                         System.out.println("Szkoda, że już kończysz grę. Mam nadzieję, że zobaczymy się niedługo ponownie.");
@@ -337,7 +346,29 @@ public class Game {
     }
 
     private void searchNewClients() {
-        Project newProject = this.projects.get(new Random().nextInt(this.projects.size()));
-        this.availableProjects.add(newProject);
+        this.daysForSearchingNewClients ++;
+        System.out.println("Przeznaczyłeś " + this.daysForSearchingNewClients + " dni na szukanie nowych klientów.");
+        if(this.daysForSearchingNewClients == 5){
+            Project newProject = this.projects.get(new Random().nextInt(this.projects.size()));
+            this.availableProjects.add(newProject);
+            this.daysForSearchingNewClients = 0;
+            System.out.println("5 dni szukania nowych klientów skutkuje dodaniem nowego projektu do " +
+                    "dostępnych projektów do realizacji.");
+        }
+        System.out.println("-------------------------\n");
+        localDate = localDate.plusDays(1);
+    }
+
+    private void payBills() {
+        if(this.daysToPayBills <2)
+        {
+            this.daysToPayBills++;
+            System.out.println("Przeznaczyłeś w tym miesiącu " + this.daysToPayBills + " dni na rozliczenia z urzędami.");
+            localDate = localDate.plusDays(1);
+        }
+        if(this.daysToPayBills == 2){
+            System.out.println("W tym miesiącu nie musisz się już rozliczać z urzędami.");
+        }
+        System.out.println("-------------------------\n");
     }
 }
