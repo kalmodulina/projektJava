@@ -24,6 +24,10 @@ public class Company {
         return (ArrayList<Employee>) employees;
     }
 
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+    }
+
     public ArrayList<Technology> getOwnerTechnologies() {
         return (ArrayList<Technology>) ownerTechnologies;
     }

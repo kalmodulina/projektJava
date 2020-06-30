@@ -9,6 +9,8 @@ public class Game {
     private ArrayList<Client> clients = new ArrayList<Client>();
     private ArrayList<Project> projects = new ArrayList<Project>();
     private ArrayList<Project> availableProjects = new ArrayList<Project>();
+    private ArrayList<Employee> employees = new ArrayList<Employee>();
+    private ArrayList<Employee> availableEmployees = new ArrayList<Employee>();
     private Company company = new Company();
     private LocalDate localDate = LocalDate.of(2020 , 1 , 1);
     private Locale polish = new Locale("pl", "PL");
@@ -17,6 +19,9 @@ public class Game {
         this.addClientPool();
         this.addProjectPool();
         this.setupAvailableProjects();
+        this.addContractorPool();
+        this.addEmployeePool();
+        this.setupAvailableEmployees();
         this.showMenu();
     }
 
@@ -39,6 +44,69 @@ public class Game {
     {
         Random random = new Random();
         return this.clients.get(random.nextInt(this.clients.size()));
+    }
+
+    private void addContractorPool() {
+        Contractor contractor;
+        contractor = new Contractor("Jan Nowak", ContractorType.EXPENSIVE);
+        setupRandomTechnologiesToContractor(contractor);
+
+        contractor = new Contractor("Zosia Kowalska", ContractorType.NORMAL);
+        setupRandomTechnologiesToContractor(contractor);
+
+        contractor = new Contractor("Pan Mądraliński", ContractorType.CHEAP);
+        setupRandomTechnologiesToContractor(contractor);
+    }
+
+    private void setupRandomTechnologiesToContractor(Contractor contractor) {
+        while (contractor.technologies.size() < new Random().nextInt(5) + 2) {
+            Technology technology = Technology.values()[(new Random().nextInt(Technology.values().length))];
+            if (!contractor.technologies.contains(technology)) {
+                contractor.technologies.add(technology);
+            }
+        }
+    }
+
+    private void addEmployeePool() {
+        Employee employee;
+        employee = new Employee("Adam Waś", 6000.0, EmployeeType.PROGRAMMER);
+        setupRandomTechnologiesToProgrammer(employee);
+        employees.add(employee);
+
+        employee = new Employee("Ewa Welon", 7200.0, EmployeeType.PROGRAMMER);
+        setupRandomTechnologiesToProgrammer(employee);
+        employees.add(employee);
+
+        employee = new Employee("Zbigniew Rola", 4300.0, EmployeeType.PROGRAMMER);
+        setupRandomTechnologiesToProgrammer(employee);
+        employees.add(employee);
+
+        employees.add(new Employee("Ewa Bal", 3100.0, EmployeeType.TESTER));
+        employees.add(new Employee("Zosia Wilk", 4200.0, EmployeeType.TESTER));
+        employees.add(new Employee("Piotr Szewc", 3600.0, EmployeeType.TESTER));
+
+        employees.add(new Employee("Michał Lok", 3200.0, EmployeeType.SELLER));
+        employees.add(new Employee("Renata Wał", 2600.0, EmployeeType.SELLER));
+        employees.add(new Employee("Marcin Erka", 2900.0, EmployeeType.SELLER));
+
+    }
+
+    private void setupRandomTechnologiesToProgrammer(Employee employee) {
+        while (employee.technologies.size() < new Random().nextInt(5) + 2) {
+            Technology technology = Technology.values()[(new Random().nextInt(Technology.values().length))];
+            if (!employee.technologies.contains(technology)) {
+                employee.technologies.add(technology);
+            }
+        }
+    }
+
+    private void setupAvailableEmployees() {
+        while (availableEmployees.size() < 2) {
+            Employee employee = this.employees.get(new Random().nextInt(this.employees.size()));
+            if (!availableEmployees.contains(employee)) {
+                availableEmployees.add(employee);
+            }
+        }
     }
 
     private void addProjectPool() {
@@ -148,6 +216,7 @@ public class Game {
                         showAvailableProjects();
                         break;
                     case 2:
+                        showAvailableEmployees();
                         break;
                     case 3:
                         System.out.println("Stan konta Twojej firmy: " + company.getBudget());
@@ -218,6 +287,19 @@ public class Game {
             System.out.println("Dostępne projekty:\n");
             for(Project project : this.availableProjects) {
                 System.out.println(project);
+            }
+        }
+    }
+
+    private void showAvailableEmployees() {
+        if (this.availableEmployees.size() == 0 ) {
+            System.out.println("Brak dostępnych pracowników");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            System.out.println("Dostępni pracownicy:\n");
+            for(Employee employee : this.availableEmployees) {
+                System.out.println(employee);
             }
         }
     }
