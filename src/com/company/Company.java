@@ -11,6 +11,8 @@ public class Company {
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Technology> ownerTechnologies = new ArrayList<Technology>(Arrays.asList(Technology.BACKEND,
             Technology.DATABASE, Technology.FRONT_END, Technology.WORDPRESS, Technology.PRESTASHOP));
+    public ArrayList<Project> activeProjects = new ArrayList<Project>();
+    public ArrayList<Project> completedProjects = new ArrayList<Project>();
 
     public Company() {
         budget = DEFAULT_BUDGET;

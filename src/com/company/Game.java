@@ -1,6 +1,6 @@
 package com.company;
 
-import javax.swing.*;
+import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -240,16 +240,16 @@ public class Game {
                         searchNewClients();
                         break;
                     case 7:
-                        localDate = localDate.plusDays(20);
+                        programming();
                         break;
                     case 8:
                         localDate = localDate.plusDays(1);
                         break;
                     case 9:
-                        localDate = localDate.plusDays(1);
+                        giveCompletedProjectToClient();
                         break;
                     case 10:
-                        localDate = localDate.plusDays(1);
+                        localDate = localDate.plusDays(20);
                         break;
                     case 11:
                         localDate = localDate.plusDays(1);
@@ -315,34 +315,39 @@ public class Game {
 
     private void implementNewProject() {
 
-        int index = 0;
-        for (Project project : this.availableProjects) {
-            System.out.println("Numer projektu: " + ++index + "\n" + project);
-        }
-
-        System.out.println("Podaj numer projektu: ");
-        Scanner scanner = new Scanner(System.in);
-        int projectNumber = scanner.nextInt();
-        if (projectNumber <= this.availableProjects.size() && projectNumber > 0) {
-            Project project = this.availableProjects.get(projectNumber - 1);
-            if (project.getProjectType() == ProjectType.HARD && company.getEmployees().size() <= 0) {
-                System.out.println("Wybrany przez Ciebie projekt należy do złożonych, aby go zrealizować musisz zatrudnić pracownika." +
-                        "Nie mając pracowników możesz realizować tylko proste i średnie projekty.");
-                System.out.println("-------------------------\n");
-            }
-            else {
-                this.availableProjects.remove(this.availableProjects.get(projectNumber - 1));
-                localDate = localDate.plusDays(1);
-                System.out.println("Gratulacje ! Podpisałeś umowę na realizacje nowego projektu.");
-                System.out.println("-------------------------\n");
-            }
-        }
-        else {
-            System.out.println("Brak dostępnego projektu o podanym przez Ciebie numerze.");
+        if (this.availableProjects.size() == 0 ) {
+            System.out.println("Brak dostępnych projektów");
             System.out.println("-------------------------\n");
         }
+        else {
+            int index = 0;
+            for (Project project : this.availableProjects) {
+                System.out.println("Numer projektu: " + ++index + "\n" + project);
+            }
 
-
+            System.out.println("Podaj numer projektu: ");
+            Scanner scanner = new Scanner(System.in);
+            int projectNumber = scanner.nextInt();
+            if (projectNumber <= this.availableProjects.size() && projectNumber > 0) {
+                Project project = this.availableProjects.get(projectNumber - 1);
+                if (project.getProjectType() == ProjectType.HARD && company.getEmployees().size() <= 0) {
+                    System.out.println("Wybrany przez Ciebie projekt należy do złożonych, aby go zrealizować musisz zatrudnić pracownika." +
+                            "Nie mając pracowników możesz realizować tylko proste i średnie projekty.");
+                    System.out.println("-------------------------\n");
+                }
+                else {
+                    this.company.activeProjects.add(this.availableProjects.get(projectNumber - 1));
+                    this.availableProjects.remove(this.availableProjects.get(projectNumber - 1));
+                    localDate = localDate.plusDays(1);
+                    System.out.println("Gratulacje ! Podpisałeś umowę na realizacje nowego projektu.");
+                    System.out.println("-------------------------\n");
+                }
+            }
+            else {
+                System.out.println("Brak dostępnego projektu o podanym przez Ciebie numerze.");
+                System.out.println("-------------------------\n");
+            }
+        }
     }
 
     private void searchNewClients() {
@@ -357,6 +362,77 @@ public class Game {
         }
         System.out.println("-------------------------\n");
         localDate = localDate.plusDays(1);
+    }
+
+    private void programming() {
+        if (this.company.activeProjects.size() == 0 ) {
+            System.out.println("Brak aktywnych projektów");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            int index = 0;
+            for (Project project : this.company.activeProjects) {
+                System.out.println("Numer projektu: " + ++index + "\n" + project);
+            }
+
+            System.out.println("Podaj numer projektu: ");
+            Scanner scanner = new Scanner(System.in);
+            int projectNumber = scanner.nextInt();
+
+            if (projectNumber <= this.company.activeProjects.size() && projectNumber > 0) {
+                int technologyIndex = 0;
+                for (Map.Entry entry : this.company.activeProjects.get(projectNumber - 1).technologiesWithDays) {
+                    System.out.println("Numer technologi: " + ++technologyIndex + "\n" +
+                            "Technologia: " + entry.getKey() +
+                            "\nIlość dni jakie pozostały: " + entry.getValue());
+                }
+
+                System.out.println("Podaj numer technologii: ");
+                int technologyNumber = scanner.nextInt();
+
+                if (technologyNumber <= this.company.activeProjects.get(projectNumber - 1).technologiesWithDays.size() && technologyNumber > 0) {
+                    this.company.activeProjects.get(projectNumber - 1).programming(
+                        this.company.activeProjects.get(projectNumber - 1).technologiesWithDays.get(technologyNumber - 1));
+
+                    localDate = localDate.plusDays(1);
+                }
+                else {
+                    System.out.println("Brak technologii o podanym przez Ciebie numerze.");
+                    System.out.println("-------------------------\n");
+                }
+            }
+            else {
+                System.out.println("Brak aktywnego projektu o podanym przez Ciebie numerze.");
+                System.out.println("-------------------------\n");
+            }
+        }
+    }
+
+    private void giveCompletedProjectToClient() {
+        if (this.company.completedProjects.size() == 0 ) {
+            System.out.println("Brak gotowych projektów");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            int index = 0;
+            for (Project project : this.company.completedProjects) {
+                System.out.println("Numer projektu: " + ++index + "\n" + project);
+            }
+
+            System.out.println("Podaj numer projektu: ");
+            Scanner scanner = new Scanner(System.in);
+            int projectNumber = scanner.nextInt();
+
+            if (projectNumber <= this.company.completedProjects.size() && projectNumber > 0) {
+                this.company.completedProjects.remove(this.company.completedProjects.get(projectNumber - 1));
+                localDate = localDate.plusDays(1);
+                System.out.println("Brawo, udało Ci się oddać projekt dla klienta.");
+            }
+            else {
+                System.out.println("Brak gotowego projektu o podanym przez Ciebie numerze.");
+            }
+            System.out.println("-------------------------\n");
+        }
     }
 
     private void payBills() {

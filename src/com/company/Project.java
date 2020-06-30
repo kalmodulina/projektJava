@@ -28,6 +28,57 @@ public class Project {
         return type;
     }
 
+    public void programming(Map.Entry<Technology, Integer> technologyWithDays) {
+        if(technologyWithDays.getKey() == Technology.DATABASE) {
+            Integer days = technologyWithDays.getValue() - 1;
+            technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).setValue(days);
+            if(technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).getValue() == 0) {
+                technologiesWithDays.remove(technologyWithDays);
+            }
+            System.out.println("Przeznaczono dzień na programowanie " + Technology.DATABASE);
+        }
+        if(technologyWithDays.getKey() == Technology.FRONT_END) {
+            Integer days = technologyWithDays.getValue() - 1;
+            technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).setValue(days);
+            if(technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).getValue() == 0) {
+                technologiesWithDays.remove(technologyWithDays);
+            }
+            System.out.println("Przeznaczono dzień na programowanie " + Technology.FRONT_END);
+        }
+        if(technologyWithDays.getKey() == Technology.BACKEND) {
+            Integer days = technologyWithDays.getValue() - 1;
+            technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).setValue(days);
+            if(technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).getValue() == 0) {
+                technologiesWithDays.remove(technologyWithDays);
+            }
+            System.out.println("Przeznaczono dzień na programowanie " + Technology.BACKEND);
+        }
+        if(technologyWithDays.getKey() == Technology.MOBILE) {
+            Integer days = technologyWithDays.getValue() - 1;
+            technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).setValue(days);
+            if(technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).getValue() == 0) {
+                technologiesWithDays.remove(technologyWithDays);
+            }
+            System.out.println("Przeznaczono dzień na programowanie " + Technology.MOBILE);
+        }
+        if(technologyWithDays.getKey() == Technology.WORDPRESS) {
+            Integer days = technologyWithDays.getValue() - 1;
+            technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).setValue(days);
+            if(technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).getValue() == 0) {
+                technologiesWithDays.remove(technologyWithDays);
+            }
+            System.out.println("Przeznaczono dzień na programowanie " + Technology.WORDPRESS);
+        }
+        if(technologyWithDays.getKey() == Technology.PRESTASHOP) {
+            Integer days = technologyWithDays.getValue() - 1;
+            technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).setValue(days);
+            if(technologiesWithDays.get(technologiesWithDays.indexOf(technologyWithDays)).getValue() == 0) {
+                technologiesWithDays.remove(technologyWithDays);
+            }
+            System.out.println("Przeznaczono dzień na programowanie " + Technology.PRESTASHOP);
+        }
+    }
+
     @Override
     public String toString() {
         return "Nazwa projektu: " + this.name +
