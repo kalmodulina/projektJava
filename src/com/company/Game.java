@@ -249,7 +249,7 @@ public class Game {
                         giveCompletedProjectToClient();
                         break;
                     case 10:
-                        localDate = localDate.plusDays(20);
+                        hireEmployee();
                         break;
                     case 11:
                         dismissEmployee();
@@ -430,6 +430,33 @@ public class Game {
             }
             else {
                 System.out.println("Brak gotowego projektu o podanym przez Ciebie numerze.");
+            }
+            System.out.println("-------------------------\n");
+        }
+    }
+
+    private void hireEmployee() {
+        if (this.availableEmployees.size() == 0 ) {
+            System.out.println("Brak dostępnych pracowników.");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            int index = 0;
+            for (Employee employee : this.availableEmployees) {
+                System.out.println("Numer pracownika: " + ++index + "\n" + employee);
+            }
+
+            System.out.println("Podaj numer pracownika: ");
+            Scanner scanner = new Scanner(System.in);
+            int employeeNumber = scanner.nextInt();
+
+            if (employeeNumber <= this.availableEmployees.size() && employeeNumber > 0) {
+                this.company.hireEmployee(this.availableEmployees.get(employeeNumber - 1));
+                localDate = localDate.plusDays(1);
+                System.out.println("Zatrudniłeś nowego pracownika.");
+            }
+            else {
+                System.out.println("Brak pracownika o podanym przez Ciebie numerze.");
             }
             System.out.println("-------------------------\n");
         }
