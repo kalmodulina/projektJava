@@ -30,6 +30,11 @@ public class Company {
         employees.add(employee);
     }
 
+    public void dismissEmployee(Employee employee) {
+        employees.remove(employee);
+        this.budget = this.budget - DISMISSAL_COST;
+    }
+
     public ArrayList<Technology> getOwnerTechnologies() {
         return (ArrayList<Technology>) ownerTechnologies;
     }

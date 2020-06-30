@@ -252,7 +252,7 @@ public class Game {
                         localDate = localDate.plusDays(20);
                         break;
                     case 11:
-                        localDate = localDate.plusDays(1);
+                        dismissEmployee();
                         break;
                     case 12:
                         payBills();
@@ -430,6 +430,33 @@ public class Game {
             }
             else {
                 System.out.println("Brak gotowego projektu o podanym przez Ciebie numerze.");
+            }
+            System.out.println("-------------------------\n");
+        }
+    }
+
+    private void dismissEmployee() {
+        if (this.company.getEmployees().size() == 0 ) {
+            System.out.println("Nie masz pracowników.");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            int index = 0;
+            for (Employee employee : this.company.getEmployees()) {
+                System.out.println("Numer pracownika: " + ++index + "\n" + employee);
+            }
+
+            System.out.println("Podaj numer pracownika: ");
+            Scanner scanner = new Scanner(System.in);
+            int employeeNumber = scanner.nextInt();
+
+            if (employeeNumber <= this.company.getEmployees().size() && employeeNumber > 0) {
+                this.company.dismissEmployee(this.company.getEmployees().get(employeeNumber - 1));
+                localDate = localDate.plusDays(1);
+                System.out.println("Zwolniłeś pracownika.");
+            }
+            else {
+                System.out.println("Brak pracownika o podanym przez Ciebie numerze.");
             }
             System.out.println("-------------------------\n");
         }
