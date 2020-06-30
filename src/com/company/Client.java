@@ -17,6 +17,7 @@ public class Client {
         return type;
     }
 
+    @Override
     public String toString() {
         return "Nazwa klienta: " + this.name;
     }

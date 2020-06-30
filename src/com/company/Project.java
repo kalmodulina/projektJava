@@ -7,7 +7,7 @@ import java.util.Map;
 public class Project {
     private String name;
     private Client client;
-    private List<Map.Entry<Technology, Integer>> technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+    private ArrayList<Map.Entry<Technology, Integer>> technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
     private Integer daysToDeadline;
     private Double penalty;
     private Double price;
@@ -22,5 +22,16 @@ public class Project {
         this.price = price;
         this.daysToPayment = daysToPayment;
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Nazwa projektu: " + this.name +
+                "\nKlient: " + this.client.getName() +
+                "\nIlość dni na wykonanie projektu: " + this.daysToDeadline +
+                "\nWysokość kary za przekroczenie terminu: " + this.penalty +
+                "\nCena za wykonanie projektu: " + this.price +
+                "\nIlość dni na wypłacenie zapłaty po oddaniu projektu: " + this.daysToPayment +
+                "\n-------------------------\n";
     }
 }

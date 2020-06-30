@@ -2,16 +2,20 @@ package com.company;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
     private ArrayList<Client> clients = new ArrayList<Client>();
+    private ArrayList<Project> projects = new ArrayList<Project>();
+    private ArrayList<Project> availableProjects = new ArrayList<Project>();
+    private Company company = new Company();
+    private LocalDate localDate = LocalDate.of(2020 , 1 , 1);
+    private Locale polish = new Locale("pl", "PL");
 
     public Game() {
         this.addClientPool();
+        this.addProjectPool();
+        this.setupAvailableProjects();
         this.showMenu();
     }
 
@@ -36,9 +40,32 @@ public class Game {
         return this.clients.get(random.nextInt(this.clients.size()));
     }
 
+    private void addProjectPool() {
+        projects.add(new Project("Projekt  sklepu internetowego", getRandomClient(), new Random().nextInt(16) + 5, 200.0, 2100.0, new Random().nextInt(9) + 2, ProjectType.EASY));
+        projects.add(new Project("Projekt bazy danych", getRandomClient(), new Random().nextInt(16) + 5, 300.0, 3000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
+        projects.add(new Project("Projekt aplikacji webowej", getRandomClient(), new Random().nextInt(16) + 5, 1000.0, 20000.0, new Random().nextInt(9) + 2, ProjectType.HARD));
+        projects.add(new Project("Projekt aplikacji mobilnej", getRandomClient(), new Random().nextInt(16) + 5, 1200.0, 25000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
+        projects.add(new Project("Projekt aplikacji webowej i mobilnej", getRandomClient(), new Random().nextInt(16) + 5, 2000.0, 40000.0, new Random().nextInt(9) + 2, ProjectType.HARD));
+        projects.add(new Project("Projekt statycznej strony internetowej", getRandomClient(), new Random().nextInt(16) + 5, 100.0, 1000.0, new Random().nextInt(9) + 2, ProjectType.EASY));
+        projects.add(new Project("Projekt dynamicznej strony internetowej", getRandomClient(), new Random().nextInt(16) + 5, 200.0, 1500.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
+        projects.add(new Project("Projekt bazy danych dla aplikacji webowej", getRandomClient(), new Random().nextInt(16) + 5, 250.0, 1500.0, new Random().nextInt(9) + 2, ProjectType.EASY));
+        projects.add(new Project("Projekt gry na urządzenia mobilne", getRandomClient(), new Random().nextInt(16) + 5, 1200.0, 10000.0, new Random().nextInt(9) + 2, ProjectType.HARD));
+        projects.add(new Project("Projekt gry komuterowej", getRandomClient(), new Random().nextInt(16) + 5, 2200.0, 15000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
+
+
+    }
+
+    private void setupAvailableProjects() {
+        while (availableProjects.size() < 3) {
+            Project project = this.projects.get(new Random().nextInt(this.projects.size()));
+            if (!availableProjects.contains(project)) {
+                availableProjects.add(project);
+            }
+        }
+    }
+
     private void showMenu() {
-        LocalDate localDate = LocalDate.of(2020 , 1 , 1);
-        Locale polish = new Locale("pl", "PL");
+
         int choice;
 
         do
@@ -50,19 +77,20 @@ public class Game {
 
             switch (choice) {
                 case 1:
+                    showAvailableProjects();
                     break;
                 case 2:
                     break;
                 case 3:
-                    Company c = new Company();
-                    System.out.println("Stan konta Twojej firmy: " + c.getBudget());
+                    System.out.println("Stan konta Twojej firmy: " + company.getBudget());
                     break;
                 case 4:
                     break;
                 case 5:
-                    localDate = localDate.plusDays(1);
+                    implementNewProject();
                     break;
                 case 6:
+                    searchNewClients();
                     localDate = localDate.plusDays(1);
                     break;
                 case 7:
@@ -110,5 +138,47 @@ public class Game {
         System.out.println("11 - Zwolnij pracownika");
         System.out.println("12 - Rozlicz się z urzędami");
         System.out.println("13 - Wyjście\n");
+    }
+
+    private void showAvailableProjects() {
+        if (this.availableProjects.size() == 0 ) {
+            System.out.println("Brak dostępnych projektów");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            System.out.println("Dostępne projekty:\n");
+            for(Project project : this.availableProjects) {
+                System.out.println(project);
+            }
+        }
+    }
+
+    private void implementNewProject() {
+
+        int index = 0;
+        for (Project project : this.availableProjects) {
+            System.out.println("Numer projektu: " + ++index + "\n" + project);
+        }
+
+        System.out.println("Podaj numer projektu: ");
+        Scanner scanner = new Scanner(System.in);
+        int projectNumber = scanner.nextInt();
+        if (projectNumber < this.availableProjects.size() && projectNumber > 0) {
+            this.availableProjects.remove(this.availableProjects.get(projectNumber - 1));
+            localDate = localDate.plusDays(1);
+            System.out.println("Gratulacje ! Podpisałeś umowę na realizacje nowego projektu.");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            System.out.println("Brak dostępnego projektu o podanym przez Ciebie numerze.");
+            System.out.println("-------------------------\n");
+        }
+
+
+    }
+
+    private void searchNewClients() {
+        Project newProject = this.projects.get(new Random().nextInt(this.projects.size()));
+        this.availableProjects.add(newProject);
     }
 }
