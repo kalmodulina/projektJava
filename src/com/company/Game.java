@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -41,18 +42,78 @@ public class Game {
     }
 
     private void addProjectPool() {
-        projects.add(new Project("Projekt  sklepu internetowego", getRandomClient(), new Random().nextInt(16) + 5, 200.0, 2100.0, new Random().nextInt(9) + 2, ProjectType.EASY));
-        projects.add(new Project("Projekt bazy danych", getRandomClient(), new Random().nextInt(16) + 5, 300.0, 3000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
-        projects.add(new Project("Projekt aplikacji webowej", getRandomClient(), new Random().nextInt(16) + 5, 1000.0, 20000.0, new Random().nextInt(9) + 2, ProjectType.HARD));
-        projects.add(new Project("Projekt aplikacji mobilnej", getRandomClient(), new Random().nextInt(16) + 5, 1200.0, 25000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
-        projects.add(new Project("Projekt aplikacji webowej i mobilnej", getRandomClient(), new Random().nextInt(16) + 5, 2000.0, 40000.0, new Random().nextInt(9) + 2, ProjectType.HARD));
-        projects.add(new Project("Projekt statycznej strony internetowej", getRandomClient(), new Random().nextInt(16) + 5, 100.0, 1000.0, new Random().nextInt(9) + 2, ProjectType.EASY));
-        projects.add(new Project("Projekt dynamicznej strony internetowej", getRandomClient(), new Random().nextInt(16) + 5, 200.0, 1500.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
-        projects.add(new Project("Projekt bazy danych dla aplikacji webowej", getRandomClient(), new Random().nextInt(16) + 5, 250.0, 1500.0, new Random().nextInt(9) + 2, ProjectType.EASY));
-        projects.add(new Project("Projekt gry na urządzenia mobilne", getRandomClient(), new Random().nextInt(16) + 5, 1200.0, 10000.0, new Random().nextInt(9) + 2, ProjectType.HARD));
-        projects.add(new Project("Projekt gry komuterowej", getRandomClient(), new Random().nextInt(16) + 5, 2200.0, 15000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM));
+        Project project;
+        project = new Project("Projekt  sklepu internetowego", getRandomClient(), new Random().nextInt(16) + 5,
+                200.0, 2100.0, new Random().nextInt(9) + 2, ProjectType.EASY);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.PRESTASHOP, new Random().nextInt(9) + 2));
+        projects.add(project);
 
+        project = new Project("Projekt bazy danych", getRandomClient(), new Random().nextInt(16) + 5,
+                300.0, 3000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.BACKEND, new Random().nextInt(9) + 2));
+        projects.add(project);
 
+        project = new Project("Projekt aplikacji webowej", getRandomClient(), new Random().nextInt(16) + 5,
+                1000.0, 20000.0, new Random().nextInt(9) + 2, ProjectType.HARD);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.BACKEND, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.FRONT_END, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt aplikacji mobilnej", getRandomClient(), new Random().nextInt(16) + 5,
+                1200.0, 25000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.MOBILE, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.BACKEND, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt aplikacji webowej i mobilnej", getRandomClient(), new Random().nextInt(16) + 5,
+                2000.0, 40000.0, new Random().nextInt(9) + 2, ProjectType.HARD);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.FRONT_END, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.BACKEND, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.MOBILE, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt statycznej strony internetowej", getRandomClient(), new Random().nextInt(16) + 5,
+                100.0, 1000.0, new Random().nextInt(9) + 2, ProjectType.EASY);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.WORDPRESS, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt dynamicznej strony internetowej", getRandomClient(), new Random().nextInt(16) + 5,
+                200.0, 1500.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.FRONT_END, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.WORDPRESS, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt bazy danych dla aplikacji webowej", getRandomClient(), new Random().nextInt(16) + 5,
+                250.0, 1500.0, new Random().nextInt(9) + 2, ProjectType.EASY);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt gry na urządzenia mobilne", getRandomClient(), new Random().nextInt(16) + 5,
+                1200.0, 10000.0, new Random().nextInt(9) + 2, ProjectType.HARD);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.MOBILE, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.BACKEND, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        projects.add(project);
+
+        project = new Project("Projekt gry komuterowej", getRandomClient(), new Random().nextInt(16) + 5,
+                2200.0, 15000.0, new Random().nextInt(9) + 2, ProjectType.MEDIUM);
+        project.technologiesWithDays = new ArrayList<Map.Entry<Technology, Integer>>();
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.BACKEND, new Random().nextInt(9) + 2));
+        project.technologiesWithDays.add(new AbstractMap.SimpleEntry<Technology, Integer>(Technology.DATABASE, new Random().nextInt(9) + 2));
+        projects.add(project);
     }
 
     private void setupAvailableProjects() {
@@ -70,52 +131,60 @@ public class Game {
 
         do
         {
-            printMenuOptions(localDate, polish);
+            if(company.getBudget() < 0)
+            {
+                choice = 13;
+                System.out.println("Przegrana ! Niestety stan konta Twojej firmy spadł poniżej 0 i przegrywasz.");
+                System.out.println("-------------------------\n");
+            }
+            else {
+                printMenuOptions(localDate, polish);
 
-            Scanner scanner = new Scanner(System.in);
-            choice = scanner.nextInt();
+                Scanner scanner = new Scanner(System.in);
+                choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    showAvailableProjects();
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    System.out.println("Stan konta Twojej firmy: " + company.getBudget());
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    implementNewProject();
-                    break;
-                case 6:
-                    searchNewClients();
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 7:
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 8:
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 9:
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 10:
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 11:
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 12:
-                    localDate = localDate.plusDays(1);
-                    break;
-                case 13:
-                    System.out.println("Szkoda, że już kończysz grę. Mam nadzieję, że zobaczymy się niedługo ponownie.");
-                    break;
-                default:
-                    System.out.println("Nieprawidłowy wybór opcji. Spróbuj jeszcze raz.");
+                switch (choice) {
+                    case 1:
+                        showAvailableProjects();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        System.out.println("Stan konta Twojej firmy: " + company.getBudget());
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        implementNewProject();
+                        break;
+                    case 6:
+                        searchNewClients();
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 7:
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 8:
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 9:
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 10:
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 11:
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 12:
+                        localDate = localDate.plusDays(1);
+                        break;
+                    case 13:
+                        System.out.println("Szkoda, że już kończysz grę. Mam nadzieję, że zobaczymy się niedługo ponownie.");
+                        break;
+                    default:
+                        System.out.println("Nieprawidłowy wybór opcji. Spróbuj jeszcze raz.");
+                }
             }
         } while (choice != 13);
     }
@@ -163,11 +232,19 @@ public class Game {
         System.out.println("Podaj numer projektu: ");
         Scanner scanner = new Scanner(System.in);
         int projectNumber = scanner.nextInt();
-        if (projectNumber < this.availableProjects.size() && projectNumber > 0) {
-            this.availableProjects.remove(this.availableProjects.get(projectNumber - 1));
-            localDate = localDate.plusDays(1);
-            System.out.println("Gratulacje ! Podpisałeś umowę na realizacje nowego projektu.");
-            System.out.println("-------------------------\n");
+        if (projectNumber <= this.availableProjects.size() && projectNumber > 0) {
+            Project project = this.availableProjects.get(projectNumber - 1);
+            if (project.getProjectType() == ProjectType.HARD && company.getEmployees().size() <= 0) {
+                System.out.println("Wybrany przez Ciebie projekt należy do złożonych, aby go zrealizować musisz zatrudnić pracownika." +
+                        "Nie mając pracowników możesz realizować tylko proste i średnie projekty.");
+                System.out.println("-------------------------\n");
+            }
+            else {
+                this.availableProjects.remove(this.availableProjects.get(projectNumber - 1));
+                localDate = localDate.plusDays(1);
+                System.out.println("Gratulacje ! Podpisałeś umowę na realizacje nowego projektu.");
+                System.out.println("-------------------------\n");
+            }
         }
         else {
             System.out.println("Brak dostępnego projektu o podanym przez Ciebie numerze.");
