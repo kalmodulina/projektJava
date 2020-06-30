@@ -8,7 +8,7 @@ public class Company {
     static final Double EMPLOYMENT_COST = 5000.0;
     static final Double EMPLOYEE_MAINTENANCE_COST = 1000.0;
     static final Double DISMISSAL_COST = 2000.0;
-    private List<Employee> employees = new ArrayList<Employee>();
+    private ArrayList<Employee> employees = new ArrayList<Employee>();
 
     public Company() {
         budget = DEFAULT_BUDGET;

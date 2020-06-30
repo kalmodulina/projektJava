@@ -7,7 +7,7 @@ public abstract class Programmer extends Employee {
 
     private Level accuracy;
     private Level punctuality;
-    private List<Technology> technologies = new ArrayList<Technology>();
+    private ArrayList<Technology> technologies = new ArrayList<Technology>();
 
     public Programmer(String firstName, String lastName, Double payment, Level accuracy, Level punctuality) {
         super(firstName, lastName, payment);
