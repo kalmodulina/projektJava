@@ -1,6 +1,5 @@
 package com.company;
 
-import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
@@ -232,6 +231,7 @@ public class Game {
                         System.out.println("Stan konta Twojej firmy: " + company.getBudget());
                         break;
                     case 4:
+                        checkStatusOfProjectImplementation();
                         break;
                     case 5:
                         implementNewProject();
@@ -310,6 +310,26 @@ public class Game {
             for(Employee employee : this.availableEmployees) {
                 System.out.println(employee);
             }
+        }
+    }
+
+    private void checkStatusOfProjectImplementation() {
+        if (this.company.activeProjects.size() == 0 ) {
+            System.out.println("Brak aktywnych projektów");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            int index = 0;
+            System.out.println("Status aktywnych projektów przedstawia technologie oraz ilość dni jakie pozostały do wykonania przed skończeniem projektu: ");
+            for (Project project : this.company.activeProjects) {
+                System.out.println("\nNumer projektu: " + ++index
+                        + "\nNazwa projektu: " + project.getProjectName());
+                for (Map.Entry entry : project.technologiesWithDays) {
+                    System.out.println("Technologia: " + entry.getKey() +
+                            "\nIlość dni jakie pozostały: " + entry.getValue());
+                }
+            }
+            System.out.println("-------------------------\n");
         }
     }
 

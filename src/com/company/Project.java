@@ -24,6 +24,11 @@ public class Project {
         this.type = type;
     }
 
+    public String getProjectName() {
+        return name;
+    }
+
+
     public ProjectType getProjectType() {
         return type;
     }
