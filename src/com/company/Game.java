@@ -10,6 +10,7 @@ public class Game {
     private ArrayList<Project> availableProjects = new ArrayList<Project>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Employee> availableEmployees = new ArrayList<Employee>();
+    private ArrayList<Contractor> contractors = new ArrayList<Contractor>();
     private Company company = new Company();
     private LocalDate localDate = LocalDate.of(2020 , 1 , 1);
     private Locale polish = new Locale("pl", "PL");
@@ -50,12 +51,15 @@ public class Game {
         Contractor contractor;
         contractor = new Contractor("Jan Nowak", ContractorType.EXPENSIVE);
         setupRandomTechnologiesToContractor(contractor);
+        contractors.add(contractor);
 
         contractor = new Contractor("Zosia Kowalska", ContractorType.NORMAL);
         setupRandomTechnologiesToContractor(contractor);
+        contractors.add(contractor);
 
         contractor = new Contractor("Pan Mądraliński", ContractorType.CHEAP);
         setupRandomTechnologiesToContractor(contractor);
+        contractors.add(contractor);
     }
 
     private void setupRandomTechnologiesToContractor(Contractor contractor) {
@@ -78,6 +82,18 @@ public class Game {
         employees.add(employee);
 
         employee = new Employee("Zbigniew Rola", 4300.0, EmployeeType.PROGRAMMER);
+        setupRandomTechnologiesToProgrammer(employee);
+        employees.add(employee);
+
+        employee = new Employee("Tomasz Sznur", 6100.0, EmployeeType.PROGRAMMER);
+        setupRandomTechnologiesToProgrammer(employee);
+        employees.add(employee);
+
+        employee = new Employee("Kasia Wolna", 4200.0, EmployeeType.PROGRAMMER);
+        setupRandomTechnologiesToProgrammer(employee);
+        employees.add(employee);
+
+        employee = new Employee("Zbigniew Kot", 5300.0, EmployeeType.PROGRAMMER);
         setupRandomTechnologiesToProgrammer(employee);
         employees.add(employee);
 
@@ -201,12 +217,12 @@ public class Game {
         {
             if(company.getBudget() < 0)
             {
-                choice = 13;
+                choice = 14;
                 System.out.println("Przegrana ! Niestety stan konta Twojej firmy spadł poniżej 0 i przegrywasz.");
                 System.out.println("-------------------------\n");
             }
             if (this.localDate.getDayOfMonth() == 1 && this.daysToPayBills < 2 && !this.localDate.isEqual(LocalDate.of(2020 , 1 , 1))) {
-                choice = 13;
+                choice = 14;
                 System.out.println("Przegrana ! Nie rozliczyłeś się z urzędami i po kontroli zamykasz firmę z długami.");
             }
             else {
@@ -251,19 +267,22 @@ public class Game {
                         hireEmployee();
                         break;
                     case 11:
-                        dismissEmployee();
+                        addJobAdvertisement();
                         break;
                     case 12:
-                        payBills();
+                        dismissEmployee();
                         break;
                     case 13:
+                        payBills();
+                        break;
+                    case 14:
                         System.out.println("Szkoda, że już kończysz grę. Mam nadzieję, że zobaczymy się niedługo ponownie.");
                         break;
                     default:
                         System.out.println("Nieprawidłowy wybór opcji. Spróbuj jeszcze raz.");
                 }
             }
-        } while (choice != 13);
+        } while (choice != 14);
     }
 
     private static void printMenuOptions(LocalDate localDate, Locale polish) {
@@ -281,9 +300,10 @@ public class Game {
         System.out.println("8 - Testuj");
         System.out.println("9 - Oddaj gotowy projekt klientowi");
         System.out.println("10 - Zatrudnij nowego pracownika");
-        System.out.println("11 - Zwolnij pracownika");
-        System.out.println("12 - Rozlicz się z urzędami");
-        System.out.println("13 - Wyjście\n");
+        System.out.println("11 - Daj ogłoszenie o pracę");
+        System.out.println("12 - Zwolnij pracownika");
+        System.out.println("13 - Rozlicz się z urzędami");
+        System.out.println("14 - Wyjście\n");
     }
 
     private void showAvailableProjects() {
@@ -496,6 +516,8 @@ public class Game {
 
             if (employeeNumber <= this.availableEmployees.size() && employeeNumber > 0) {
                 this.company.hireEmployee(this.availableEmployees.get(employeeNumber - 1));
+                this.employees.remove(this.availableEmployees.get(employeeNumber - 1));
+                this.availableEmployees.remove(this.availableEmployees.get(employeeNumber - 1));
                 localDate = localDate.plusDays(1);
                 System.out.println("Zatrudniłeś nowego pracownika.");
             }
@@ -504,6 +526,18 @@ public class Game {
             }
             System.out.println("-------------------------\n");
         }
+    }
+
+    private void addJobAdvertisement() {
+        Integer availableEmployeesSize = availableEmployees.size();
+        while (availableEmployees.size() < availableEmployeesSize + 1) {
+            Employee employee = this.employees.get(new Random().nextInt(this.employees.size()));
+            if (!availableEmployees.contains(employee)) {
+                availableEmployees.add(employee);
+            }
+        }
+        this.company.addJobAdvertisement();
+        System.out.println("-------------------------\n");
     }
 
     private void dismissEmployee() {
@@ -522,6 +556,7 @@ public class Game {
             int employeeNumber = scanner.nextInt();
 
             if (employeeNumber <= this.company.getEmployees().size() && employeeNumber > 0) {
+                this.employees.add(this.company.getEmployees().get(employeeNumber - 1));
                 this.company.dismissEmployee(this.company.getEmployees().get(employeeNumber - 1));
                 localDate = localDate.plusDays(1);
                 System.out.println("Zwolniłeś pracownika.");
