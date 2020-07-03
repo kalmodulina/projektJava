@@ -36,6 +36,11 @@ public class Company {
         this.budget = this.budget - DISMISSAL_COST;
     }
 
+    public void completedProject(Project project) {
+        this.budget = this.budget + project.getProjectPrice();
+        completedProjects.remove(project);
+    }
+
     public ArrayList<Technology> getOwnerTechnologies() {
         return (ArrayList<Technology>) ownerTechnologies;
     }

@@ -28,6 +28,9 @@ public class Project {
         return name;
     }
 
+    public Double getProjectPrice() {
+        return price;
+    }
 
     public ProjectType getProjectType() {
         return type;

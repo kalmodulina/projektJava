@@ -444,7 +444,7 @@ public class Game {
             int projectNumber = scanner.nextInt();
 
             if (projectNumber <= this.company.completedProjects.size() && projectNumber > 0) {
-                this.company.completedProjects.remove(this.company.completedProjects.get(projectNumber - 1));
+                this.company.completedProject(this.company.completedProjects.get(projectNumber - 1));
                 localDate = localDate.plusDays(1);
                 System.out.println("Brawo, udało Ci się oddać projekt dla klienta.");
             }
