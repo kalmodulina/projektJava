@@ -1,6 +1,8 @@
 package com.company;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Company {
     private Double budget;
@@ -37,8 +39,49 @@ public class Company {
     }
 
     public void completedProject(Project project) {
-        this.budget = this.budget + project.getProjectPrice();
-        completedProjects.remove(project);
+        if(project.isWorking() || project.getClient().getClientType() == ClientType.EASY) {
+            this.budget = this.budget + project.getProjectPrice();
+            completedProjects.remove(project);
+            System.out.println("Brawo, udało Ci się oddać projekt dla klienta.");
+        }
+        else {
+            if(project.getClient().getClientType() == ClientType.MEDIUM) {
+                if(new Random().nextBoolean()) {
+                    this.budget = this.budget + project.getProjectPrice();
+                    completedProjects.remove(project);
+                    System.out.println("Brawo, udało Ci się oddać projekt dla klienta.");
+                }
+                else {
+                    completedProjects.remove(project);
+                    System.out.println("Oddałeś niedziałający projekt, utraciłeś kontrakt bez zwrotu kosztów.");
+                }
+            }
+            else {
+                completedProjects.remove(project);
+                System.out.println("Oddałeś niedziałający projekt, utraciłeś kontrakt bez zwrotu kosztów.");
+            }
+        }
+    }
+
+    public void testingProject(Project project) {
+        int testerCount = 0;
+        int programmerCount = 1;
+        for (Employee employee : this.employees) {
+            if(employee.isTester()) {
+                testerCount++;
+            }
+            if(employee.isProgrammer()) {
+                programmerCount++;
+            }
+        }
+        if(testerCount > 0 && ((double)programmerCount)/3.0 <= (double)testerCount) {
+            project.setIsWorking(true);
+            System.out.println("Przeznaczono dzień na testowanie.");
+        }
+        else {
+            System.out.println("Nie masz wystarczającej ilości testerów, aby zagwarantować, że nie oddasz klientowi nie działającego projektu");
+        }
+
     }
 
     public ArrayList<Technology> getOwnerTechnologies() {

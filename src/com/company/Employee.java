@@ -8,11 +8,28 @@ public class Employee {
     private EmployeeType type;
     public ArrayList<Technology> technologies = new ArrayList<Technology>();
 
-
     public Employee(String name, Double payment, EmployeeType type) {
         this.name = name;
         this.payment = payment;
         this.type = type;
+    }
+
+    public Boolean isTester() {
+        if(this.type == EmployeeType.TESTER) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Boolean isProgrammer() {
+        if(this.type == EmployeeType.PROGRAMMER) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

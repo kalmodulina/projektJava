@@ -43,8 +43,7 @@ public class Game {
 
     private Client getRandomClient()
     {
-        Random random = new Random();
-        return this.clients.get(random.nextInt(this.clients.size()));
+        return this.clients.get(new Random().nextInt(this.clients.size()));
     }
 
     private void addContractorPool() {
@@ -243,7 +242,7 @@ public class Game {
                         programming();
                         break;
                     case 8:
-                        localDate = localDate.plusDays(1);
+                        testing();
                         break;
                     case 9:
                         giveCompletedProjectToClient();
@@ -428,6 +427,32 @@ public class Game {
         }
     }
 
+    private void testing() {
+        if (this.company.activeProjects.size() == 0 ) {
+            System.out.println("Brak aktywnych projektów");
+            System.out.println("-------------------------\n");
+        }
+        else {
+            int index = 0;
+            for (Project project : this.company.activeProjects) {
+                System.out.println("Numer projektu: " + ++index + "\n" + project);
+            }
+
+            System.out.println("Podaj numer projektu, który chcesz testować: ");
+            Scanner scanner = new Scanner(System.in);
+            int projectNumber = scanner.nextInt();
+
+            if (projectNumber <= this.company.activeProjects.size() && projectNumber > 0) {
+                this.company.testingProject(this.company.activeProjects.get(projectNumber - 1));
+                localDate = localDate.plusDays(1);
+            }
+            else {
+                System.out.println("Brak aktywnego projektu o podanym przez Ciebie numerze.");
+            }
+            System.out.println("-------------------------\n");
+        }
+    }
+
     private void giveCompletedProjectToClient() {
         if (this.company.completedProjects.size() == 0 ) {
             System.out.println("Brak gotowych projektów");
@@ -439,14 +464,13 @@ public class Game {
                 System.out.println("Numer projektu: " + ++index + "\n" + project);
             }
 
-            System.out.println("Podaj numer projektu: ");
+            System.out.println("Podaj numer projektu, który chcesz oddać: ");
             Scanner scanner = new Scanner(System.in);
             int projectNumber = scanner.nextInt();
 
             if (projectNumber <= this.company.completedProjects.size() && projectNumber > 0) {
                 this.company.completedProject(this.company.completedProjects.get(projectNumber - 1));
                 localDate = localDate.plusDays(1);
-                System.out.println("Brawo, udało Ci się oddać projekt dla klienta.");
             }
             else {
                 System.out.println("Brak gotowego projektu o podanym przez Ciebie numerze.");
